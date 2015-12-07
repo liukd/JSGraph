@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS Graph - Formatting Text</title>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<link href="css/jsgfirststeps.css" rel="stylesheet">
+		<script type="application/javascript" src="../../lib/Loader.js"></script>
+		<script type="application/javascript" src="loader.js"></script>
+		<script type="application/javascript" src="prettify/prettify.js"></script>	
+	</head>
+	<body onload="loadDemo()">
+		<div style="width:100%; height:100%;">
+			<div id="graph">
+				<canvas id="canvas1" tabindex="0" style="cursor:auto;">
+				</canvas>
+			</div>
+			<div id="guide">
+				<div id="content">
+					<h1>Formatting Text Nodes in JS Graph</h1>
+					<h2>Overview</h2>
+					<p>
+						This chapter explains in more detail, how text formats can be assigned to <code>GraphItem</code>s. A <code>TextNode</code> is always a <code>GraphItem</code> on its own that 
+						is a sub item of another <code>GraphItem</code>. This way a label (<code>TextNode</code>) can be attached to Nodes like rectangle or ellipsis or to lines and edges.
+						Text formats can be applied to <code>TextNode</code>s being attached to a node or to a line, but also to the parent <code>GraphItem</code>.
+					</p>
+					<p>
+						By default the <code>TextNode</code> uses the text format being defined with the parent <code>GraphItem</code>. This way the formatting is inherited from the parent. If you 
+						change the parent text format, all contained labels or TextNodes will use this format. If you need an individual text format for one or all
+						of the <code>TextNode</code>s within a <code>GraphItem</code> you can assign individual formats to each or some of the <code>TextNode</code>s.
+					</p>
+					<p>
+						In addition to the text format of a <code>GraphItem</code> you can insert (limited) HTML code as text into a <code>TextNode</code>. The HTML tags will be used to format and
+						structure the content of the <code>TextNode</code>. The set of allowed tags is currently limited to the Paragraph, List tags and Spans. In addition formatting
+						tags for bold, italic are valid. The text alignment, font size, color and family can be assigned using styles.   
+					</p>
+					<h2>Text Formatting</h2>
+					<p>
+						Text can be formatted using font settings. You can apply a font name, font size and the font styles. In addition you can set the text
+						position within the parent node. You can have more than one label attached to a node. Each label can have its own font settings. In the following
+						sample you can see how the font settings are applied and their effect. We will change the font name, size and color. Please notice, that the
+						settings of the parent <code>GraphItem</code> is changed and the dependant <code>TextNode</code>s will also use this setting.
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="formatTextFont"></pre>
+					</div>
+					<button type="button" onclick="sampleCode.formatTextFont()">
+						Format Text
+					</button>
+					<p>
+						Now we assign a text alignment and a color to a text node. Colors are assigned using an hexadecimal string. The alignment is set using the
+						predefined constants. Please note that adding a linefeed (\n) to the text breaks the line as you would expect. 
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="formatTextAlignment"></pre>
+					</div>
+					<button type="button" onclick="sampleCode.formatTextAlignment()">
+						Set Text Alignment
+					</button>
+					<p>
+						Following you can see, how multiple labels are attached to a node and how the position of a label can be defined. As an alternative, you could also
+						set the coordinates of the label, as a label is also a node. The coordinates for the label position are relative to its parent. 
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="formatTextPosition"></pre>
+					</div>
+					<button type="button" onclick="sampleCode.formatTextPosition()">
+						Set Text Position
+					</button>
+					<p>
+						Now we show an example how the text format is inherited and how you can define exceptions. We create a node with three labels. The parent <code>GraphItem</code>s receives
+						a font setting, which in effect formats all three labels. For one of the labels, we define an exception by formatting the font size of this label to a
+						different value. 
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="formatTextInheritance"></pre>
+					</div>
+					<button type="button" onclick="sampleCode.formatTextInheritance()">
+						Set Text Format with exception 
+					</button>
+					<p>
+						Finally we take a look at formatted text node. You can use a limited set of HTML tags to apply inline formatting to a <code>TextNode</code>. This way
+						you can define exceptions to the general text format within the text to emphasize text sections or to structure text using paragraphs or lists. 
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="formatTextHTML"></pre>
+					</div>
+					<button type="button" onclick="sampleCode.formatTextHTML()">
+						Set HTML Text 
+					</button>
+					<p>
+						Follow <a href="attributes.html">JS Graph - Working with Attributes</a> to continue.
+					</p>
+					<p>&nbsp;</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Release Notes JS Graph</title>
+    </head>
+    <style>
+        body {
+            font-family: Verdana;
+        }
+        h1 {
+            font-size: 14pt;
+        }
+        h2 {
+            font-size: 11pt;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+        p, li {
+            font-size: 9pt;
+            margin-bottom: 5px;
+            margin-left: 20px;
+        }
+    </style>
+    <body>
+        <h1>Release Notes JS Graph</h1>
+
+        <p>Version 1.6.13</p>
+        <h2>Features</h2>
+        <p>The following features have been added to JS-Graph:</p>
+        <ul>
+            <li>New text attribute to shorten text horizontally. If the flag is set, text will be shortened its parent width, visualized by three dots.</li>
+            <li>New text attribute to shorten text vertically. If the flag is set, text will be shortened its parent height, visualized by three dots below the text.</li>
+            <li>Watermarks can be added to any node. A watermark is displayed as a background text.</li>
+        </ul>
+        <h2>Changes</h2>
+        <p>The following changes have been made. Most of them were implemented to optimize existing behaviour.</p>
+        <ul>
+        	<li><code>JSG.getDpi()</code> removed in order to allow loading of <code>jsg.js</code> library before <code>HTML</code> body is loaded.</li>
+        	<li><code>JSG.dpi</code> and <code>JSG.graphics</code> are set and initialized after a call to <code>JSG.init()</code> which should be done after <code>HTML</code> body has been loaded.</li>
+        	<li><code>JSG.commons.Map.iterate</code> passed in <code>Function</code> parameter can return <code>true</code> to stop iteration.</li>
+        	<li><code>JSG.graph.attr.AttributeList.iterate</code> passed in <code>Function</code> parameter can return <code>true</code> to stop iteration.</li>
+        	<li><code>JSG.graph.expr.MapExpression.prototype.iterate</code> passed in <code>Function</code> parameter can return <code>true</code> to stop iteration.</li>
+        </ul>
+        <h2>API</h2>
+        <p>Following an overview over new and changed APIs. Please visit the API Documentation for further infos.</p>
+        <ul>
+            <li>New</li>
+            <ul>
+            	<li><code>JSG.commons.BSTree</code> an implementation of a binary search tree. Will be used for future layout enhancements.</li>
+            	<li><code>JSG.graph.attr.WatermarkAttributes</code> class to define watermark properties.</li>
+            	<li><code>JSG.graph.attr.TextFormatAttributes.TextBaseline</code> to support vertical text alignment</li>
+            	<li><code>JSG.graph.controller.GroupController</code> a controller for the new <code>Group</code> model.</li>
+            	<li><code>JSG.graph.interaction.Highlighter</code> to support easier customization of certain highlights, e.g. for move or drop targets</li>
+                <li><code>JSG.graph.model.GraphItem.prototype.addWatermark</code> to create a new watermark.</li>
+                <li><code>JSG.graph.model.GraphItem.prototype.getWatermark</code> get access to an existing watermark.</li>
+                <li><code>JSG.graph.model.Group</code> a new graph model to allow more sophisticated grouping of items.</li>
+                <li><code>JSG.graph.view.ContentPaneView.prototype.setScrollTo(point)</code> for Views which act as a content view</li>
+                <li><code>JSG.graph.view.GroupView</code> a view to display the new <code>Group</code> model.</li>
+                <li><code>JSG.ui.View.prototype.getSubviewCount()</code> simply returns the number of sub views</li>
+                <!-- TODO when ready: EdgeLayouter -->
+            </ul>
+            <li>Changes</li>
+            <ul>
+            	<li><code>JSG.commons.Arrays.insert()</code> was deprecated and removed now. Use <code>JSG.commons.Arrays.insertAt</code> instead.</li>
+            	<li><code>JSG.commons.XML.iterateChildren</code> If the callback returns false, the iteration will be stopped.</li>
+            	<li><code>JSG.graph.Utils.traverseItem()</code> removed <code>funcscope</code> parameter. Intsead javascript <code>bind()</code> should be used for setting scope of called function.</li>
+            	<li><code>JSG.graph.command.GroupItemsCommand</code> added additional parameter to control the kind of group to create.</li>
+            </ul>
+            <li>Deprecated</li>
+            <ul>
+            	<li><code>JSG.graph.interaction.InteractionUtils.highlightTargetController()</code> use methods of new <code>JSG.graph.interaction.Highlighter</code></li>
+            	<li><code>JSG.graph.interaction.InteractionUtils.highlightControllerLayoutPosition()</code> use methods of new <code>JSG.graph.interaction.Highlighter</code></li>
+            </ul>
+        </ul>
+        <h2>Removed Bugs</h2>
+        <ul>
+            <li>Problems with deselection in negative coordinate system</li>
+            <li>Mouse Wheel Support in IE was not working correctly.</li>
+        </ul>
+        <p>Version 1.6</p>
+        <h2>Features</h2>
+        <p>The following features have been added to JS-Graph:</p>
+        <ul>
+            <li>When using the Mousewheel, while pressing the Ctrl-Key, the graph is zoomed now.</li>
+            <li>Added an interaction to select an area with the mouse to zoom to (<code>JSG.graph.interaction.ZoomInteraction</code>).</li>
+            <li>Different Line Caps can be defined (butt, round, square).</li>
+            <li>A tooltip can be attached to a GraphItem.</li>
+            <li>Different scrollbars modes to hide and show scrollbars.</li>
+            <li>The Shape library can now display items without a label.</li>
+            <li>New grid styles (Point and Cross) are introduced</li>
+            <li>The page borders can be displayed.</li>
+            <li>Text containers can be set to read only mode. The text can then be activated, but not changed. This can be useful to copy the content.</li>
+            <li>Import of simple SVG files.</li>
+            <li>Expression formulas can now use functions. All referenced functions must be defined in <code>JSG.Functions</code>.</li>
+        </ul>
+        <h2>Changes</h2>
+        <p>The following changes have been made. Most of them were implemented to optimize existing behaviour.</p>
+        <ul>
+            <li>The Wheel Event is used instead of the MouseWheel Event (deprecated).</li>
+            <li>Improved snap behaviour for <code>JSG.graph.interaction.ResizeInteraction</code>. In previous versions, snap lines were only shown during move interactions.</li>
+            <li>Zooming improved. During zooming, the center of the viewport is preserved.</li>
+            <li>Support shift-tab selection. Shift-Tab selects the previous item.</li>
+            <li>The MoveInteraction has completely been refactored to enable better snap line handling</li>
+            <li>Added defined delegate support for <code>JSG.graph.interaction.MoveInteraction</code> and <code>JSG.graph.interaction.DragDropInteraction</code> to support easier customization.</li>
+            <li><code>JSG.graph.interaction.ReadOnlyInteraction</code> now also enables Link-, Tooltip- and EditTextInteractions.</li>
+            <li>Rotation Markers are not displayed any more, if an item is not rotatable.</li>
+            <li><code>JSG.graph.view.shapes.DefaultShapeRenderer</code>: added <code>init()</code> function which will be called before drawing to initialize renderer.</li>
+        </ul>
+        <h2>API</h2>
+        <p>Following an overview over new and changed APIs. Please visit the API Documentation for further infos.</p>
+        <ul>
+            <li>New</li>
+            <ul>
+                <li><code>JSG.graph.interaction.ZoomInteraction</code></li>
+                <li><code>JSG.graph.model.shapes.PathShape</code> and <code>JSG.graph.view.shapes.PathShapeRenderer</code></li>
+                <li><code>JSG.graph.interaction.SnapHelper</code> to ease customization of snap-line behaviour.</li>
+                <li><code>JSG.graph.interaction.MoveAlignHelper</code> to ease customzation of alignment during interaction.</li>
+                <li><code>JSG.graph.interaction.TooltipActivator</code> to support Tooltip activation while mouse moves.</li> 
+                <!-- mention new methods, have to see if we keep those here... -->
+                <li><code>JSG.commons.StableMap#getLast()</code></li>
+                <li><code>JSG.graph.view.SelectionProvider#getLastSelection()</code></li>
+                <li><code>JSG.graph.controller.ModelController#iterate()</code></li>
+                <li><code>JSG.graph.attr.FormatAttributes.LineCap</code> support.</li>
+                <li><code>JSG.ui.graphics.Graphics</code> support for line-cap and quadratic bezier curves.</li>
+                <li><code>JSG.commons.Strings.cut</code>Cuts off a string from another.</li>
+                <li><code>JSG.geometry.Point.prototype.distanceToLine</code> calculates the distance of the point to a line.</li>
+                <li><code>JSG.geometry.Rectangle.translatePoint</code>Translates the rectangle using the offset given by the point argument.</li>
+                <li><code>JSG.ui.graphics.Graphics.prototype.drawPixel</code> to draw a single pixel.</li>
+                <li><code>JSG.graph.command.AddAttributeCommand</code> class to add an attribute as a command.</li>
+                <li><code>JSG.graph.command.RemoveAttributeCommand</code> class to remove an attribute as a command.</li>
+                <li><code>JSG.graph.command.SetLinkCommand</code> class to attach a link to a GraphItem as a command.</li>
+                <li><code>JSG.graph.model.settings.GridStyle</code> constans to define grid style</li>
+                <li><code>JSG.graph.model.settings.GraphSettings.get/setPageBorderVisible</code> to show page borders</li>
+                <li><code>JSG.graph.model.ContentNode.get/setHorizontalScrollbarMode</code>to show or hide scrollbars in ContentNodes.</li> 
+                <li><code>JSG.graph.model.ContentNode.get/setVerticalScrollbarMode</code> to show or hide scrollbars in ContentNodes.</li>
+                <li><code>JSG.graph.model.Graph.prototype.isDirty</code> to check graph status.</li>
+                <li><code>JSG.graph.model.GraphItem.prototype.get/setTooltip</code> to set or get a tooltip.</li>
+            </ul>
+            <li>Changes</li>
+            <ul>
+                <li><code>JSG.geometry.Rectangle.containsBoundingBox</code> renamed to <code>JSG.geometry.Rectangle.containsBBox</code></li>
+                <li><code>JSG.commons.XMLWriter.flush</code> has a new parameter to create an XML string with or without tabs and spaces.
+                <li>Missing <code>JSG.graph.attr.consts.Moveable</code> constants added.
+                <li><code>AttributeExpression</code> is now derived from <code>StringExpression</code> instead of <code>Expression</code></li>
+            </ul>
+            <li>Deprecated</li>
+            <ul>
+            	<li><code>JSG.graph.view.GraphView.getPageOffset()</code> use new <code>JSG.graph.view.GraphView.getPageOffsetTo()</code> and <code>JSG.graph.view.GraphView.getPageOffsetFrom()</code></li>
+            </ul>
+        </ul>
+        <h2>Removed Bugs</h2>
+        <ul>
+            <li>Problems with devices that have parallel touch and mouse support.</li>
+            <li>Mouse coordinates were not correctly transformed in IE, if canvas was part of a scrollable DIV</li>
+            <li>Orthogonal Lines that are not moveable do not display a marker for movement any more.</li>
+            <li>The documentation was generated partially incorrect.</li>
+            <li>The notification <code>JSG.ui.GraphEditor.ZOOM_NOTIFICATION</code> was not send correctly.</li>
+            <li><code>JSG.geometry.BoundingBox#setWidth/#setHeight</code> tolerates invalid parameters</li> 
+            <li>Applied TextFormats were removed correctly, if multiple labels were attached to a GraphItem and have been formatted previously with an individual format.</li>
+            <li>Automatically distributing items within containers did not work correctly.</li>
+            <li>Fixed typo in <code>JSG.graph.attr.LayoutAttributes.AUTORESIZE</code> and <code>JSG.graph.attr.LayoutAttributes.AUTORESIZELAYOUT</code>.</li>
+            <li>In <code>JSG.graph.notifications.NotificationCenter</code> it was possible to register same observer for same notification several times.</li>
+            <li>Fixed <code>JSG.graph.view.GraphView.translateToParent</code></li>
+        </ul>
+    </body>
+</html>

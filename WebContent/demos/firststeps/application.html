@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS Graph - Application</title>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<link href="css/jsgfirststeps.css" rel="stylesheet">
+		<script type="application/javascript" src="../../lib/Loader.js"></script>
+		<script type="application/javascript" src="loader.js"></script>
+		<script type="application/javascript" src="prettify/prettify.js"></script>	
+	</head>
+	<body onload="loadDemo()">
+		<div style="width:100%; height:100%;">
+			<div id="graph">
+                <div id="tools">
+                    <a onclick="openGraph()" style="background-image: url(icons/open.png)"> </a>
+                    <a onclick="saveGraph()" style="background-image: url(icons/save.png)"> </a>
+                    <span> &nbsp;</span>
+                    <a onclick="copySelection()" style="background-image: url(icons/copy.png)"> </a>
+                    <a onclick="cutSelection()" style="background-image: url(icons/cut.png)"> </a>
+                    <a onclick="paste()" style="background-image: url(icons/paste.png)"> </a>
+                    <a onclick="deleteSelection()" style="background-image: url(icons/delete.png)"> </a>
+                    <span> &nbsp;</span>
+                    <a onclick="undo()" style="background-image: url(icons/undo.png)"> </a>
+                    <a onclick="redo()" style="background-image: url(icons/redo.png)"> </a>
+                    <span> &nbsp;</span>
+                    <a onclick="createLine()" style="background-image: url(icons/line.png)"> </a>
+                    <a onclick="createRect()" style="background-image: url(icons/rectangle.png)"> </a>
+                    <a onclick="createText()" style="background-image: url(icons/text.png)"> </a>
+                    <a onclick="createEllipse()" style="background-image: url(icons/ellipse.png)"> </a>
+                    <a onclick="createPolyline(false)" style="background-image: url(icons/polyline.png)"> </a>
+                    <a onclick="createPolyline(true)" style="background-image: url(icons/polygon.png)"> </a>
+                    <a onclick="createBezier()" style="background-image: url(icons/bezier.png)"> </a>
+                    <span> &nbsp;</span>
+                    <a onclick="edit()" style="background-image: url(icons/editpoints.png)"> </a>
+                    <span> &nbsp;</span>
+                    <a onclick="align(JSG.graph.command.Alignment.LEFT)" style="background-image: url(icons/alignleft.png)"> </a>
+                    <a onclick="align(JSG.graph.command.Alignment.CENTER)" style="background-image: url(icons/aligncenter.png)"> </a>
+                    <a onclick="align(JSG.graph.command.Alignment.RIGHT)" style="background-image: url(icons/alignright.png)"> </a>
+                    <a onclick="align(JSG.graph.command.Alignment.TOP)" style="background-image: url(icons/aligntop.png)"> </a>
+                    <a onclick="align(JSG.graph.command.Alignment.MIDDLE)" style="background-image: url(icons/alignmiddle.png)"> </a>
+                    <a onclick="align(JSG.graph.command.Alignment.BOTTOM)" style="background-image: url(icons/alignbottom.png)"> </a>
+                    <span> &nbsp;</span>
+                    <a onclick="order(JSG.graph.command.ChangeItemOrder.TOTOP)" style="background-image: url(icons/ordertop.png)"> </a>
+                    <a onclick="order(JSG.graph.command.ChangeItemOrder.UP)" style="background-image: url(icons/ordertotop.png)"> </a>
+                    <a onclick="order(JSG.graph.command.ChangeItemOrder.DOWN)" style="background-image: url(icons/ordertobottom.png)"> </a>
+                    <a onclick="order(JSG.graph.command.ChangeItemOrder.TOBOTTOM)" style="background-image: url(icons/orderbottom.png)"> </a>
+                </div>
+				<canvas id="canvas1" tabindex="0" style="cursor:auto;">
+				</canvas>
+			</div>
+			<div id="guide">
+				<div id="content">
+					<h1>Building an Application</h1>
+					<h2>Overview</h2>
+					<p>
+						This Tutorial gives a guideline on how to build a simple drawing application. The sample contains a toolbar and each of the
+						toolbar buttons are assigned to a command. The application allows to use the clipboard, perform undo/redo operations, create new items and 
+						to change their alignment and order. 
+					</p>
+					<h2>Create the Toolbar</h2>
+					<p>
+					    In this sample we simply add a DIV with some link tags to create the toolbar. The link tags are styled with bitmaps and have a click handler assigned. 
+					    In addition with some CSS, the toolbar display nicely above the canvas. As this is plain HTML and CSS and your application will have a different layout anyhow, 
+					    we will not explain this in detail, but you can investigate the CSS and HTML needed to setup this page by looking at the files being provided with the library.
+					</p>
+					<p>
+					    The click handlers call functions, which execute either a command or activate an interaction within the library. Using this approach, it is guaranteed, that the undo/redo chain
+					    is managed correctly. Some of the handlers pass an argument, which is used within the command.
+					</p>
+                    <div class="codediv">
+                        <pre id="xmlrdata" class="prettyprint">
+&lt;div id="tools"&gt;
+    &lt;a onclick="copySelection()" style="background-image: url(icons/copy.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="cutSelection()" style="background-image: url(icons/cut.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="paste()" style="background-image: url(icons/paste.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="deleteSelection()" style="background-image: url(icons/delete.png)"&gt; &lt;/a&gt;
+    &lt;span&gt; &nbsp;&lt;/span&gt;
+    &lt;a onclick="undo()" style="background-image: url(icons/undo.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="redo()" style="background-image: url(icons/redo.png)"&gt; &lt;/a&gt;
+    &lt;span&gt; &nbsp;&lt;/span&gt;
+    &lt;a onclick="createLine()" style="background-image: url(icons/line.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="createRect()" style="background-image: url(icons/rectangle.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="createText()" style="background-image: url(icons/text.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="createEllipse()" style="background-image: url(icons/ellipse.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="createPolyline(false)" style="background-image: url(icons/polyline.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="createPolyline(true)" style="background-image: url(icons/polygon.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="createBezier()" style="background-image: url(icons/bezier.png)"&gt; &lt;/a&gt;
+    &lt;span&gt; &nbsp;&lt;/span&gt;
+    &lt;a onclick="edit()" style="background-image: url(icons/editpoints.png)"&gt; &lt;/a&gt;
+    &lt;span&gt; &nbsp;&lt;/span&gt;
+    &lt;a onclick="align(JSG.graph.command.Alignment.LEFT)" style="background-image: url(icons/alignleft.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="align(JSG.graph.command.Alignment.CENTER)" style="background-image: url(icons/aligncenter.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="align(JSG.graph.command.Alignment.RIGHT)" style="background-image: url(icons/alignright.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="align(JSG.graph.command.Alignment.TOP)" style="background-image: url(icons/aligntop.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="align(JSG.graph.command.Alignment.MIDDLE)" style="background-image: url(icons/alignmiddle.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="align(JSG.graph.command.Alignment.BOTTOM)" style="background-image: url(icons/alignbottom.png)"&gt; &lt;/a&gt;
+    &lt;span&gt; &nbsp;&lt;/span&gt;
+    &lt;a onclick="order(JSG.graph.command.ChangeItemOrder.TOTOP)" style="background-image: url(icons/ordertop.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="order(JSG.graph.command.ChangeItemOrder.UP)" style="background-image: url(icons/ordertotop.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="order(JSG.graph.command.ChangeItemOrder.DOWN)" style="background-image: url(icons/ordertobottom.png)"&gt; &lt;/a&gt;
+    &lt;a onclick="order(JSG.graph.command.ChangeItemOrder.TOBOTTOM)" style="background-image: url(icons/orderbottom.png)"&gt; &lt;/a&gt;
+&lt;/div>
+                        </pre>
+                    </div>
+                    <h2>Adding clipboard, delete and undo/redo commands </h2>
+                    <p>
+                        The first section of the toolbar includes the copy, cut, paste and the delete buttons. Each of the handlers for these buttons simply call a utility
+                        function within the JS-Graph API. The <code>InteractionHandler</code> contains a set of utility functions, which are very often
+                        needed within applications to simplify recurring tasks. These functions include the operations, we need here. The handler simply
+                        calls the appropriate function in the <code>InteractionHandler</code> and the desired operation takes place. In general the
+                        <code>InteractionHandler</code> creates the appropriate <code>Command</code> based on the current selection and executes it.  
+                    </p>
+					<div class="codediv">
+					<pre class="prettyprint">
+function copySelection() {
+    graphEditor.getInteractionHandler().copySelection();
+}
+
+function cutSelection() {
+    graphEditor.getInteractionHandler().cutSelection();
+}
+
+function paste() {
+    graphEditor.getInteractionHandler().paste();
+}
+
+function deleteSelection() {
+    graphEditor.getInteractionHandler().deleteSelection();
+}
+
+function undo() {
+    graphEditor.getInteractionHandler().undo();
+}
+
+function redo() {
+    graphEditor.getInteractionHandler().redo();
+}
+					</pre>
+					</div>
+                    <h2>Creating new Items</h2>
+                    <p>
+                        The next step is to offer commands to create new items. This is done by activating an interaction, which is provided by the library. Interactions are used to interfere
+                        the keyboard, mouse and gesture handling.  
+                    </p>
+                    <p>
+                        There is a default interaction, which handles the input by providing a selection mechanism. You can click on the
+                        canvas and an item is selected, if there is one at the location. Otherwise you have the chance to create a selection rectangle, which selects all items within the 
+                        selection. If a selection made, the default interaction enables the user to resize, move and rotate items. This is also managed by the default interaction, which
+                        provides additional interactions, if you hover over the selection handles. Depending on the selection handle, the mouse is placed above, the expected cursor is shown, which gives the 
+                        user a feedback on the available interactions that is initiated, if the user pushes the mouse button and moves the mouse.
+                    </p>
+                    <p>
+                        To enable the user to create items a specific interaction is created. Here we need a CreateEdgeInteraction or CreateNodeInteraction. This interaction is created and then activated by setting it
+                        as the active interaction for the Interaction Handler. The effect is, that now, when the user clicks with the mouse on the canvas and moves the cursor, while pushing the mouse, a
+                        new item is created. Which item, depends on the item that is passed to the interaction upon creation. The following functions are bound to the create tool buttons. They 
+                        activate the appropriate interaction with different shape types. The shape type determines the visual appearance of the item which can be created using the mouse.
+                    </p>
+                    <div class="codediv">
+                    <pre class="prettyprint">
+function createLine() {
+    graphEditor.getInteractionHandler().setActiveInteraction(new JSG.graph.interaction.CreateEdgeInteraction(new JSG.graph.model.Edge()));
+}
+
+function createRect() {
+    graphEditor.getInteractionHandler().setActiveInteraction(new JSG.graph.interaction.CreateNodeInteraction(new JSG.graph.model.shapes.RectangleShape()));
+}
+
+function createText() {
+    graphEditor.getInteractionHandler().setActiveInteraction(new JSG.graph.interaction.CreateNodeInteraction(new JSG.graph.model.shapes.RectangleShape(), "Label"));
+}
+
+function createEllipse() {
+    graphEditor.getInteractionHandler().setActiveInteraction(new JSG.graph.interaction.CreateNodeInteraction(new JSG.graph.model.shapes.EllipseShape()));
+}
+
+function createPolyline(closed) {
+    var polynode = new JSG.graph.model.Node(new JSG.graph.model.shapes.PolygonShape());
+    polynode.setItemAttribute(JSG.graph.attr.ItemAttributes.CLOSED, closed);
+    graphEditor.getInteractionHandler().setActiveInteraction(new JSG.graph.interaction.CreatePolyLineInteraction(polynode));
+}
+
+function createBezier(closed) {
+    var polynode = new JSG.graph.model.Node(new JSG.graph.model.shapes.BezierShape());
+    polynode.setItemAttribute(JSG.graph.attr.ItemAttributes.CLOSED, closed);
+    graphEditor.getInteractionHandler().setActiveInteraction(new JSG.graph.interaction.CreateBezierInteraction(polynode));
+}
+                    </pre>
+                    </div>
+                    <h2>Edit selected Items</h2>
+                    <p>
+                        The remaining buttons initiate actions or commands on a selection. The first is used to edit an item. Editing means here, that the points, that make up the shape of the
+                        item can be changed. If it is a polyline or polygon, you can move the points of the shape. If it is a bezier curve, you can also manipulate the control points of the
+                        bezier curve. If it is a generic shape, like a rectangle, the shape is converted to a polygon before editing it automatically. 
+                    </p>
+                    <p>
+                        The second section initiates alignment commands to align a group of items to the same position. The third section changes the drawing order of the items. All of these 
+                        actions are simply executed by calling a utitity command within the <code>InteractionHandler</code>. The latter calls also pass a flag to specify the desired outcome. 
+                        This flag is passed with the call of the click handler. Within the <code>InteractionHandler</code> there is simply code that creates a set of standard commands 
+                        based on the selection and executes these.                         
+                    </p>
+                    <div class="codediv">
+                    <pre class="prettyprint">
+function edit() {
+    graphEditor.getInteractionHandler().editSelection();
+}
+
+function align(flag) {
+    graphEditor.getInteractionHandler().alignSelection(flag);
+}
+
+function order(flag) {
+    graphEditor.getInteractionHandler().changeDrawingOrderSelection(flag);
+}
+                    </pre>
+                    </div>
+                    <h2>Saving and loading</h2>
+                    <p>
+                        The final step is enable saving and loading the drawing. Here we use the LocalStorage to save and load an XML representation of a graph. For loading
+                        the data is retrieved from the LocalStorage and the parsed by the Browser provided XML Parser. The result is then passed to the <code>GraphEditor</code> for
+                        reading the data into the graph. The graph is cleaned before loading the data.
+                    </p>
+                    <p>
+                        To save a <code>Graph</code>, you simply call the save methode of the <code>GraphEditor</code> to retrieve a XML String, which represents the current graph. 
+                        This string is then saved in the LocalStorage using a unique id. Just create a few nodes and click save to save them. If you then reload the page and click
+                        on the open button, the graph should be restored. Please note that the LocalStorage can currently only save files up to 5 Mb. In a real application
+                        you would probably save the data in a database on the server or another backend storage.
+                    </p>
+                    <div class="codediv">
+                    <pre class="prettyprint">
+function openGraph() {
+
+    var xmlData = localStorage.getItem("JSGraphSample");
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(xmlData, "text/xml");
+    if (!xmlDoc) {
+        return;
+    }
+    
+    // read into current graph
+    graphEditor.readXML(xmlDoc);
+    graphEditor.invalidate();
+}
+
+function saveGraph() {
+    var xmlData = graphEditor.saveXML();
+    
+    localStorage.setItem("JSGraphSample", xmlData);
+}
+                    </pre>
+                    </div>
+                    <h2>Working with the selection</h2>
+                    <p>
+					    In a real application you would want to disable some of the buttons to reflect availability of the commands. This can easily be achieved by retrieving the selection
+					    state and applying additional styles to the buttons. We are continuing with a short sample to show the general approach. First we register a notification handler, which is 
+					    called whenever the selection changes. You just have to call a method in the NotificationCenter class passing the notification type you are interested in and the
+					    handler which you have to provide. Click on the button to activate the notification.
+					</p>
+                    <div class="codediv">
+                        <pre class="prettyprint" source="activateSelectionNotification"> </pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.activateSelectionNotification()">
+                        Activate Selection Notification
+                    </button>
+                    <p>
+                        Now that the notification is activated, the handler is called, whenever the selection changes. This gives you the changes to react to a change and to reflect
+                        the selection status e.g. in this case to enable to disable buttons. You could also show some information attached to the selection like their position or any
+                        attributes. Following a short sample that changes the color of the node, when it is selected to give you an idea of the general approach. Here we simply set
+                        a new fill color to the selected item, if it is a single selection. All other items are formatted white.
+                    </p>
+                    <div class="codediv">
+                        <pre class="prettyprint" source="onSelectionChanged"> </pre>
+                    </div>
+                    <p>
+                        This was the final step for an initial guide to create a small application. Please visit the documentation or other tutorials to obtain information on how
+                        to proceed.
+                    </p>
+					<p>&nbsp;</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

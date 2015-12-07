@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html style="height:100%">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>JS Graph - First Steps</title>
+        <link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+        <link href="css/jsgfirststeps.css" rel="stylesheet">
+        <script type="application/javascript" src="../jsg/Loader.js"></script>
+        <script type="application/javascript" src="loader.js"></script>
+        <script type="application/javascript" src="prettify/prettify.js"></script>
+    </head>
+    <body style="overflow:auto; background-color: #FFFFFF;">
+        <div style="width:100%; height:100%;">
+            <div id="started">
+                <h1>Getting Started</h1>
+                <h2>1. Download JS-Graph</h2>
+                <p>
+                    The first step is to download JS-Graph, if you haven't done so yet. Just follow the instructions on the <a href=http://www.js-graph.com/download>download page</a>.
+                </p>
+                <h2>2. Create Directory and install JS-Graph</h2>
+                <p>
+                    Now create an empty directory on your computer, preferably a directory you can access from a local webserver. For this tutorial we assume that you name it 'jsgraph' and that it is located
+                    below your initial web directory. Copy the the downloaded JS-Graph file to this directory and unzip it. As a result you should have a directory structure like the following:
+                </p>
+                <p>
+                    <ul>
+                        <li>
+                            jsgraph
+                        </li>
+                        <ul>
+                            <li>
+                                demos
+                            </li>
+                            <li>
+                                doc
+                            </li>
+                            <li>
+                                lib
+                            </li>
+                        </ul>
+                    </ul>
+                <p>
+                    To verify that everything is installed correctly please enter
+                    <code>
+                        http://localhost/jsgraph/demos/gettingstarted/index.html
+                    </code>
+                    in your browser. This should start the <code>simpledemo</code> demo application, if the files are located within your local webserver. Otherwise use the appropriate local directory. The <code>simpledemo</code> shows a
+                    single web page that contains a sample application utilizing JS-Graph. Basically this sample is build on two files. An HTML file named <code>index.html</code> which contains the canvas and references the JavaScript code 
+                    and a small Javascript file with some initialization code named <code>index.js</code>. Default implementations of these files are provided in the <code>gettingstarted</code> directory.<br/>
+                    Now the next step depends on the version of the JS-Graph you have downloaded. Currently there is a release version and a debug version available. While the release version is minified and bundled into a single file the
+                    debug version contains the uncompressed and structured source code to make debugging easier. In order to get the debug version you have to license JS-Graph.<br/>
+                    The next chapters will explain the changes which are necessary to use JS-Graph.
+                </p>
+                <h2>3. Create HTML file using JS-Graph</h2>
+                <h3>Option 1 - Working with the Release Version</h3>
+                <p>
+                    There are three lines in an HTML file needed to create and prepare a canvas element to use JS-Graph. First you need to load the code of JS-Graph. Therefore you need to add a line which loads the <code>jsg.js</code> file
+                    using a script tag (you obviously need to replace <code>JSGRAPHDIRECTORY</code> with the relative location of your downloaded <code>jsg.js</code> file). Next you need some code to create a graph and attach it to the 
+                    canvas element. This is done in the <code>index.js</code> JavaScript file, which will be explained in the next section. Finally you need to add a canvas element, which is used by JS-Graph as the in- and output element.
+                    Just take a look at the lines marked red in the following HTML code. Please note, that a function <code>onLoaded</code> is called, when the page has finished loading.
+                    </p> 
+                <div class="codediv">
+                    <pre>                    
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;JS Graph - Getting Started&lt;/title&gt;
+            <font color="red">&lt;script type=&quot;application/javascript&quot; src=&quot;JSGRAPHDIRECTORY/jsg.js&quot;&gt;&lt;/script&gt;</font>
+            <font color="red">&lt;script type=&quot;application/javascript&quot; src=&quot;index.js&quot;&gt;&lt;/script&gt;</font>
+        &lt;/head&gt;
+        &lt;body <font color="red">onload=&quot;onLoaded()&quot;</font>&gt;
+            <font color="red">&lt;canvas id=&quot;canvas1&quot; width=&quot;1000&quot; height=&quot;800&quot; tabindex=&quot;0&quot; style=&quot;cursor:auto;&quot;&gt;&lt;/canvas&gt;</font>
+        &lt;/body&gt;
+    &lt;/html&gt;
+                    </pre>
+                </div>
+                <h3>Option 2 - Working with the Debug Version</h3>
+                <p>
+                    This is only slightly different from the release version. Again we need three lines in the HTML file. But instead of referencing the <code>jsg.js</code> library we need to load the uncompressed code files of JS-Graph. This
+                    is achieved by using a the utility class <code>Loader.js</code> which the JS-Graph library provides. The first line includes this class using a script tag (again you obviously need to replace JSGRAPHSOURCEDIRECTORY with the 
+                    relative location of JS-Graph source files). The <code>Loader.js</code> class is used by <code>indexd.js</code> to load all required JS-Graph files. So we include <code>indexd.js</code> in the next line too. More on 
+                    <code>indexd.js</code> in the next section. The last step is to provide a canvas element, which is used by JS-Graph as the in- and output element. Look at the following HTML code where the important lines are marked red. Please note, that a function <code>onLoaded</code> is called, when the page has finished loading. 
+                </p>
+                <div class="codediv">
+                    <pre>                    
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;JS Graph - Getting Started&lt;/title&gt;
+            <font color="red">&lt;script type=&quot;application/javascript&quot; src=&quot;JSGRAPHSOURCEDIRECTORY/Loader.js&quot;&gt;&lt;/script&gt;</font>
+            <font color="red">&lt;script type=&quot;application/javascript&quot; src=&quot;indexd.js&quot;&gt;&lt;/script&gt;</font>
+        &lt;/head&gt;
+        &lt;body <font color="red">onload=&quot;onLoaded()&quot;</font>&gt;
+            <font color="red">&lt;canvas id=&quot;canvas1&quot; width=&quot;1000&quot; height=&quot;800&quot; tabindex=&quot;0&quot; style=&quot;cursor:auto;&quot;&gt;&lt;/canvas&gt;</font>
+        &lt;/body&gt;
+    &lt;/html&gt;
+                    </pre>
+                </div>
+                <p>
+                    You can copy the code of the preferred version and simply use the files provided with the download in the <code>demos/gettingstarted</code> directory.
+                </p>
+                <h2>4. Create necessary JavaScript files</h2>
+                <h3>Option 1 - Working with the Release Version</h3>
+                <p>
+                     In addition to the changes in the HTML file, we need a small JavaScript file (<code>index.js</code>) which provides a function that is executed after the page has been fully loaded. In the code below this is the
+                     <code>onLoaded</code> function. <br/>
+                     Now before the JS-Graph library can be used it is important to initialize it. We do this in the first line of the function by calling <code>JSG.init</code> with the <code>JSG_HOME</code> parameter. This parameter
+                     contains the relative location of the library so that required resources can be found. Next a <code>GraphEditor</code> is created and attached to the canvas element by providing the element id of the canvas which 
+                     was created in the HTML file of the previous section. A <code>GraphEditor</code> provides all components needed to visualize and edit a <code>Graph</code> model. The following lines create such a <code>Graph</code> 
+                     model and attaches it to the <code>GraphEditor</code>.
+                </p>
+                <p>
+                     Finally and just to have something visual, a new <code>Node</code> is added to the <code>Graph</code> provided with a location and size. Furthermore a label is attached to it too. As a last step, the size of the canvas
+                     element is passed to the <code>GraphEditor</code> so that it displays correctly. Now that is all you need to do to set up a simple Graph. From here you can continue to build your own Graph by adding additional graphical
+                     objects. This is and how you can format these objects is explained in the tutorial provided with the library.  
+                </p>
+                <div class="codediv">
+                    <pre class="prettyprint">
+    var JSG_HOME = "../../dist/lib";
+    
+    /**
+     * Handler, called, when scripts are loaded 
+     */
+    function onLoaded() {
+        // initialize library
+        JSG.init(JSG_HOME);
+        
+        // create a graph editor and attach it to the canvas element
+        var graphEditor = new JSG.ui.GraphEditor("canvas1");
+        
+        // create a graph and attach it to the graph editor
+        var graph = new JSG.graph.model.Graph();
+        graphEditor.setGraph(graph);
+    
+        // create a simple node    
+        var node = graph.addItem(new JSG.graph.model.Node(new JSG.graph.model.shapes.RectangleShape()));
+        node.getPin().setCoordinate(3000, 3000);
+        node.setSize(5000, 3000);
+        node.addLabel("My first Node");
+        
+        // initial resize
+        var canvas = document.getElementById("canvas1");
+        graphEditor.resizeContent(canvas.width, canvas.height);
+    }
+                    </pre>
+                </div>
+                <h3>Option 2 - Working with the Debug Version</h3>
+                <p>
+                    In the debug version, we have a two step process. First all library files need to be loaded. This is done in the <code>onLoaded</code> function, which 
+                    is called after the body of the page has been loaded. Within this function we add the <code>includes.js</code> file, which is located in the source directory, to the <code>Loader</code>,
+                    which is provided by the JS-Graph library. The <code>includes.js</code> file simply list all required scripts. Calling <code>Loader.load</code> will start loading these scripts. 
+                    Once this has finished, the provided callback function <code>onAppLoaded</code> is called. This is the second step. In <code>onAppLoaded</code> we initialize the library, create a <code>GraphEditor</code> 
+                    and attach it to the canvas, like in the previous section, which describes the release version. Just have a look at the code below to investigate this approach.
+                    It is also provided in the gettingstarted directory. 
+                </p>
+                <div class="codediv">
+                    <pre class="prettyprint">
+
+
+    var JSG_HOME = "../jsg";
+    var JSG_LIB = "includes.js";
+    
+    /**
+     * Handler, called, when scripts are loaded 
+     */
+    function onAppLoaded() {
+        // initialize library
+        JSG.init(JSG_HOME);
+        
+        // create a graph editor and attach it to the canvas element
+        var graphEditor = new JSG.ui.GraphEditor("canvas1");
+        
+        var graph = new JSG.graph.model.Graph();
+        // create a graph and attach it to the graph editor
+        graphEditor.setGraph(graph);
+    
+        // create a simple node    
+        var node = graph.addItem(new JSG.graph.model.Node(new JSG.graph.model.shapes.RectangleShape()));
+        node.getPin().setCoordinate(3000, 3000);
+        node.setSize(5000, 3000);
+        node.addLabel("My first Node");
+        
+        // initial resize
+        var canvas = document.getElementById("canvas1");
+        graphEditor.resizeContent(canvas.width, canvas.height);
+    }
+    
+    /**
+     * Handler, when body is loaded. Necessary scripts will be added. 
+     * 
+     * @method onLoaded
+     */
+    function onLoaded() {
+        // add library files and call onAppLoaded, when finished
+        Loader.addScript(JSG_LIB, JSG_HOME, onAppLoaded);
+        Loader.load();
+    }
+                    </pre>
+                </div>
+                <h2>5. Continue with the tutorials</h2>
+                <p>
+                    This concludes the Getting Started Tutorial. To continue you can step forward to the First Step Tutorial, which shows how to create node and edges.
+                </p>
+                <p>
+                    Follow <a href="index.html">JS Graph - First Steps</a> to continue.
+                </p>
+                <p>
+                    &nbsp;
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
+

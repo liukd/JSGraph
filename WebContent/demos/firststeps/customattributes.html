@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS Graph - Custom Attributes</title>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<link href="css/jsgfirststeps.css" rel="stylesheet">
+		<script type="application/javascript" src="../../lib/Loader.js"></script>
+		<script type="application/javascript" src="loader.js"></script>
+		<script type="application/javascript" src="prettify/prettify.js"></script>
+	</head>
+	<body onload="loadDemo()">
+		<div style="width:100%; height:100%;">
+			<div id="graph">
+				<canvas id="canvas1" tabindex="0" style="cursor:auto;"></canvas>
+			</div>
+			<div id="guide">
+				<div id="content">
+					<h1>Working with Custom Attributes</h1>
+					<h2>Overview</h2>
+					<p>
+						This chapter explains in more detail, how you can define and attach custom attributes to a <code>GraphItem</code>. An <code>Attribute</code> consists of a name for the attribute and
+						its value. The value is defined as an <code>Expression</code>. An <code>Expression</code> can contain a static value or a formula. An attribute can also contain a display name, that can
+						be used for internationalization issues. Attributes can be grouped within a list. An <code>AttributeList</code> is also an attribute. This way you can, if desired, attach
+						an hierarchy of attributes to a <code>GraphItem</code>.
+					</p>
+					<h2>Defining a custom attribute list</h2>
+					<p>
+						To define a custom attribute list, you derive your own attribute list class from the <code>AttributeList</code> class of JSGraph. You can use the namespace of
+						the framework to achieve this and implement your own constructor or initializer. Within this function, you simply add the desired attributes, as shown in
+						the following code sample. Three attributes are added to the list. The first parameter is the attribute name, the second the initial value and the third
+						parameter defines the display name. The display name can be used, if you intend to show the attribute name within your user interface somewhere else.
+					</p>
+					<div class="codediv">
+						<pre class="prettyprint">
+JSG.namespace("JSG.Tutorial");
+
+JSG.Tutorial.CustomAttributes = function(mapExpr) {
+    JSG.Tutorial.CustomAttributes._super.constructor.call(this, JSG.Tutorial.CustomAttributes.PATH_ID, mapExpr);
+
+    this.addAttribute(JSG.graph.attr.StringAttribute.create("name", "Initial Name", "Name"));
+    this.addAttribute(JSG.graph.attr.StringAttribute.create("author", "Initial Author", "Author"));
+    this.addAttribute(JSG.graph.attr.StringAttribute.create("date", "1.1.2000", "Date"));
+
+};
+JSG.extend(JSG.Tutorial.CustomAttributes, JSG.graph.attr.AttributeList);
+
+JSG.Tutorial.CustomAttributes.PATH_ID = "custom";
+
+JSG.Tutorial.CustomAttributes.prototype.getClassString = function() {
+    return "JSG.Tutorial.CustomAttributes";
+};
+						</pre>
+					</div>
+					<p>
+						After the custom attribute list is defined, we can use the attribute. First we create a <code>GraphItem</code> and assign an <code>AttributeList</code> to it. This
+						is done by creating the <code>AttributeList</code> and adding this list as an attribute to the item. The name of this attribute is defined by the necessary PATH_ID property
+						of the <code>AttributeList</code>. This identifier is used, when referencing or retrieving the attribute, as you will see in the sample following this sample. Actually 
+						this sample does not visualize anything, it just adds the custom <code>AttributeList</code>.
+					</p>
+					<div class="codediv">
+						<pre class="prettyprint" source="addCustomAttributes">
+						</pre>
+					</div>
+					<button type="button" onclick="sampleCode.addCustomAttributes()">
+						Add Attribute List
+					</button>
+					<p>
+						Now that we attached the <code>AttributeList</code>, we try to visualize the attributes to check, if it all works. To achieve this, we use a formula referencing the attribute. This
+						functionality has been introduced in the previous tutorials. Any attribute of a <code>GraphItem</code> can be referenced using a formula. This way, we can assign a value to 
+						an attribute of a <code>GraphItem</code>, that is filled by the value of another attribute. To define this behaviour, we need to assign an <code>Expression</code> to an attribute instead
+						of a static value. In fact, whenever you assign a value to an attribute, the value is internally converted to a static expression representing the value. To
+						define this formula, the name of the custom <code>AttributeList</code> and the name of the attribute need to be assembled to an attribute path, separated by colons. This formula
+						is the assigned to the label text. From now on the label item uses the text formula, which references the custom attribute. In the following sample three
+						labels are added to show the contents of the custom attributes by assigning a formula to it. The formula references the parent item, as the attribute list is appended
+						to the item and not to the label. 
+                    </p>
+                    <div class="codediv">
+                        <pre class="prettyprint" source="useCustomAttributes">
+                        </pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.useCustomAttributes()">
+                        Use Attribute List
+                    </button>
+                    <p>						
+						Now we change the value of the attribute. Whenever the attribute changes the label text changes in consequence.
+					</p>
+					<div class="codediv">
+						<pre class="prettyprint" source="changeCustomAttributes">
+						</pre>
+					</div>
+					<button type="button" onclick="sampleCode.changeCustomAttributes()">
+						Change Attribute values
+					</button>
+					<p>
+					    This finishes the introduction into attributes. In the next tutorial we introduce templates. These relates to attributes as templates define predefined 
+					    attribute sets, which can be used in conjunction with attributes to implement e.g. styles or settings that can be changed globally and are reflected in 
+					    any attribute list that uses the template.
+					</p>
+					<p>
+						Follow <a href="templates.html">JS Graph - Templates</a> to continue.
+					</p>
+					<p>
+						&nbsp;
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

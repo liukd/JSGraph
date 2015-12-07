@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg width="297mm" height="210mm" viewBox="0 0 1122.52 793.7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<clipPath id="clipRect">
+			<rect id="rect" x="56.69" y="75.59" width="1009.13" height="642.52"/>
+		</clipPath>
+	</defs>
+	<text x="1065.83" y="763.46" text-anchor="end" font-family="Arial" font-size="8pt" fill="">1</text>
+	<g clip-path="url(#clipRect)">
+		<g transform="translate(56.69,75.59)">
+			<g transform="translate(151.18,28.35) rotate(0)">
+				<defs>
+					<linearGradient id="gradient1" gradientUnits="userSpaceOnUse" x1="0" y1="47.24" x2="0" y2="0">
+						<stop offset="0%" stop-color="#66B953"/>
+						<stop offset="100%" stop-color="#77CA64"/>
+					</linearGradient>
+				</defs>
+				<defs>
+					<filter id="shadow2" filterUnits="userSpaceOnUse" x="-50" y="-50" width="202.05" height="147.24">
+						<feColorMatrix color-interpolation-filters="sRGB" type="matrix" result="colored" values="0 0 0 0.24 0 0 0 0 0.56 0 0 0 0 0.16 0 0 0 0 1 0"/>
+						<feGaussianBlur in="colored" result="blur" stdDeviation="0"/>
+						<feOffset in="blur" result="offsetBlur" dx="0" dy="4"/>
+						<feMerge>
+							<feMergeNode in="offsetBlur"/>
+							<feMergeNode in="SourceGraphic"/>
+						</feMerge>
+					</filter>
+				</defs>
+				<polygon points="0,0,102.05,0,102.05,47.24,0,47.24" style="stroke:none;fill:url(#gradient1);fill-opacity:1" filter="url(#shadow2)"/>
+				<g transform="translate(23.35,5.62) rotate(0)">
+					<text x="5.67" y="22" text-anchor="start" font-family="Arial" font-size="9pt" fill="rgb(34, 34, 34)">Process</text>
+				</g>
+			</g>
+			<g transform="translate(134.17,151.18) rotate(0)">
+				<defs>
+					<linearGradient id="gradient3" gradientUnits="userSpaceOnUse" x1="0" y1="47.24" x2="0" y2="0">
+						<stop offset="0%" stop-color="#66B953"/>
+						<stop offset="100%" stop-color="#77CA64"/>
+					</linearGradient>
+				</defs>
+				<defs>
+					<filter id="shadow4" filterUnits="userSpaceOnUse" x="-50" y="-50" width="202.05" height="147.24">
+						<feColorMatrix color-interpolation-filters="sRGB" type="matrix" result="colored" values="0 0 0 0.24 0 0 0 0 0.56 0 0 0 0 0.16 0 0 0 0 1 0"/>
+						<feGaussianBlur in="colored" result="blur" stdDeviation="0"/>
+						<feOffset in="blur" result="offsetBlur" dx="0" dy="4"/>
+						<feMerge>
+							<feMergeNode in="offsetBlur"/>
+							<feMergeNode in="SourceGraphic"/>
+						</feMerge>
+					</filter>
+				</defs>
+				<path d=" M0,0 C0,0 0,47.24 0,47.24 C0,47.24 81.64,47.24 81.64,47.24 C102.05,23.62 102.05,23.62 81.64,0 C81.64,0 0,0 0,0 Z" style="stroke:none;fill:url(#gradient3);fill-opacity:1" filter="url(#shadow4)"/>
+				<g transform="translate(29.35,5.62) rotate(0)">
+					<text x="5.67" y="22" text-anchor="start" font-family="Arial" font-size="9pt" fill="rgb(34, 34, 34)">Delay</text>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

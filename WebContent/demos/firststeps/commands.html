@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html style="height:100%">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>JS Graph - Commands</title>
+        <link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+        <link href="css/jsgfirststeps.css" rel="stylesheet">
+        <script type="application/javascript" src="../../lib/Loader.js"></script>
+        <script type="application/javascript" src="loader.js"></script>
+        <script type="application/javascript" src="prettify/prettify.js"></script>
+    </head>
+    <body onload="loadDemo()">
+        <div style="width:100%; height:100%;">
+            <div id="graph">
+                <canvas id="canvas1" tabindex="0" style="cursor:auto;"></canvas>
+            </div>
+            <div id="guide">
+                <div id="content">
+                    <h1>Using and creating Commands</h1>
+                    <h2>Overview</h2>
+                    <p>
+                        Commands are used to execute actions changing the graph, which is based on user interaction. This might be initiated by
+                        menu commands, button executions or user interaction by mouse or keyboard. Commands are needed, if you intend to use the undo/redo
+                        functionality. All changes, that are imposed through commands can be undone or redone. Commands can be grouped within a <code>
+                            CompoundCommand</code>, that holds a list
+                        of single commands. This is needed, if an action involves several steps, that consist of atomic actions, but should be undone in one step. An example would be,
+                        if you drag an item pushing the Ctrl-Key. If you drop the items, two commands are executed, copy and a move command. They are grouped in a <code>CompoundCommand</code>, to
+                        enable only one undo step. In this tutorial we will examine how commands are used and executed. In addition an custom command is implemented, to show you, how you
+                        create your own command.
+                    </p>
+                    <h2>Using existing Commands</h2>
+                    <p>
+                        There is a large list of commands that are available in the JS-Graph API. These can be executed, if you initiate actions based on a user interaction. For example,
+                        if you bind a formatting action to a button, you would want to execute a command instead of changing the GraphItems directly using the <code>GraphItem</code> class. This way
+                        the undo/redo chain is kept sane and the command can be undone by the user. In addition it is mostly easier to use commands instead of using the low level API as
+                        they provide a more comfortable access to often used functionality.</br>
+                        First we will create an item and change the format of that item. If you click on the undo button, the format operation will be undone.
+                    </p>
+                    <div class="codediv">
+                        <pre class="prettyprint" source="commandFormat"></pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.commandFormat()">
+                        Create and Format Item
+                    </button>
+                    <p>
+                        Now we can easily impose an undo command on the format action. If you move the item after the item was created and formatted, the undo will first
+                        undo the move operation and then the format operation. Whenever a command is executed, it is automatically added to the undostack. When you call undo the
+                        last executed command is pulled from the stack, undone and removed from the stack as long as there is a command available.
+                    </p>
+                    <div class="codediv">
+                        <pre class="prettyprint" source="commandUndo"></pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.commandUndo()">
+                        Undo
+                    </button>
+                    <p>
+                        As a next step we will show you how to execute a <code>
+                            CompoundCommand</code>
+                        . This command is a set of command that can be grouped and executed at once. The command set will
+                        be undo or redone in one step. You simply have to create a <code>
+                            CompoundCommand</code>
+                        and add single <code>
+                            Command</code>s to it. In the following sample we will
+                        move and rotate an item in one step. Click the undo button to undo the commands in one step.
+                    </p>
+                    <div class="codediv">
+                        <pre class="prettyprint" source="commandCompound"></pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.commandCompound()">
+                        Create Compound Command
+                    </button>
+                    <button type="button" onclick="sampleCode.commandUndo()">
+                        Undo
+                    </button>
+                    <h2>Creating your own Command</h2>
+                    <p>
+                        If you need a specific command, you can also easily implement one using the existing infrastructure. You need to derive a class from the <code>
+                            JSG.graph.command.Command</code> class
+                        and implement the existing methods with in this class. You need implement a constructor to initialize the command with necessary information about the desired
+                        action that is supposed to take place. Then you need to implement the execute, redo and undo methods. The following code sample will implement a small
+                        custom command to show the general idea. 
+                    </p>
+                    <div class="codediv">
+                        <pre class="prettyprint">
+JSG.namespace("JSG.Tutorial");
+
+JSG.Tutorial.AddLabelAndBackgroundCommand = function(item, label, backgroundColor) {
+    JSG.Tutorial.AddLabelAndBackgroundCommand._super.constructor.apply(this, arguments);
+    
+    this._item = item;
+    this._label = label;
+    this._backgroundColor = backgroundColor;
+   
+    // save current color for undo
+    this._oldBackgroundColor = this._item.getFormat().getFillColor().getExpression();
+};
+JSG.extend(JSG.Tutorial.AddLabelAndBackgroundCommand, JSG.graph.command.Command);
+
+JSG.Tutorial.AddLabelAndBackgroundCommand.prototype.undo = function() {
+    // remove label
+    this._item.removeItem(this._labelItem);
+    // set original color
+    this._item.getFormat().setFillColor(this._oldBackgroundColor);
+};
+
+JSG.Tutorial.AddLabelAndBackgroundCommand.prototype.redo = function() {
+    // save label to be able to remove it on undo
+    this._labelItem = this._item.addLabel(this._label);
+    this._item.getFormat().setFillColor(this._backgroundColor);
+};
+
+JSG.Tutorial.AddLabelAndBackgroundCommand.prototype.execute = function() {
+    this.redo();
+};
+                        </pre>
+                    </div>
+                    <p>
+                        Now we create a <code>GraphItem</code> and execute the command on it. We pass a label and a new fill color to the command.
+                    </p>
+                    <div class="codediv">
+                        <pre class="prettyprint" source="commandCustom"></pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.commandCustom()">
+                        Create and execute Custom Command
+                    </button>
+                    <button type="button" onclick="sampleCode.commandUndo()">
+                        Undo
+                    </button>
+                    <p>
+                        The previous samples should have given you an overview on using commands. Please use the documentation to investigate, which commands are offered
+                        by the JS-Graph Library, that you can use in your application. For most cases you should find appropriate commands to initiate an action. The samples
+                        provided with the library rely on commands and reflect most of the functionality it offers.
+                    </p>
+                    <p>
+                        Follow <a href="persistence.html">JS Graph - Saving and Loading</a> to continue.
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

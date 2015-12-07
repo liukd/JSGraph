@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates version="1">
+	<al n="format.epc" pl="tl:JSG.graph.attr.FormatAttributes.Template">
+		<at n="linewidth">
+			<vl v="75"/>
+		</at>
+		<at n="linecorner">
+			<vl v="50"/>
+		</at>
+	</al>
+	<al n="format.epc.sub" pl="tl:JSG.graph.attr.FormatAttributes.Template">
+		<at n="fillstyle">
+			<vl v="0"/>
+		</at>
+		<at n="linestyle">
+			<vl v="0"/>
+		</at>
+	</al>
+	<al n="format.epc.xoa" pl="tl:JSG.graph.attr.FormatAttributes.Template">
+		<at n="linecolor">
+			<vl v="%23BBBBBB" t="s"/>
+		</at>
+		<at n="linewidth">
+			<vl v="75"/>
+		</at>
+	</al>
+	<al n="format.decision" pl="tl:format.epc">
+		<at n="linecolor">
+			<vl v="%23BBBBBB" t="s"/>
+		</at>
+	</al>
+	<al n="format.decision.sub" pl="tl:format.epc.sub" />
+	<al n="format.event" pl="tl:format.epc">
+		<at n="linecolor">
+			<vl v="%23BBBBBB" t="s"/>
+		</at>
+	</al>
+	<al n="format.event.sub" pl="tl:format.epc.sub" />
+	<al n="format.function" pl="tl:format.epc">
+		<at n="linecolor">
+			<vl v="%2366B953" t="s"/>
+		</at>
+	</al>
+	<al n="format.function.sub" pl="tl:format.epc.sub" />
+	<al n="format.interface" pl="tl:format.epc">
+		<at n="linecolor">
+			<vl v="%23D670A3" t="s"/>
+		</at>
+	</al>
+	<al n="format.interface.sub1" pl="tl:format.epc">
+		<at n="linecolor">
+			<vl v="%2366B953" t="s"/>
+		</at>
+	</al>
+	<al n="format.interface.sub2" pl="tl:format.epc.sub" />
+	<al n="format.or" pl="tl:format.epc.xoa" />
+	<al n="format.or.sub"  pl="tl:format.epc.sub" />
+	<al n="format.and" pl="tl:format.epc.xoa" />
+	<al n="format.and.sub" pl="tl:format.epc.sub" />
+	<al n="format.xor" pl="tl:format.epc.xoa" />
+	<al n="format.xor.sub" pl="tl:format.epc.sub" />
+	
+	<al n="item.epc" pl="tl:JSG.graph.attr.ItemAttributes.Template">
+		<at n="container">
+			<vl v="false" t="b"/>
+		</at>
+		<at n="portmode">
+			<vl v="28"/>
+		</at>
+	</al>
+	<al n="item.function" pl="tl:item.epc" />
+	
+	<al n="textformat.epc" pl="tl:JSG.graph.attr.TextFormatAttributes.Template">
+		<at n="fontcolor">
+			<vl v="%23222222" t="s"/>
+		</at>
+	</al>
+	<al n="textformat.function" pl="tl:textformat.epc" />
+</templates>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS Graph - Persistence</title>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<link href="css/jsgfirststeps.css" rel="stylesheet">
+		<script type="application/javascript" src="../../lib/Loader.js"></script>
+		<script type="application/javascript" src="loader.js"></script>
+		<script type="application/javascript" src="prettify/prettify.js"></script>
+	</head>
+	<body onload="loadDemo()">
+		<div style="width:100%; height:100%;">
+			<div id="graph">
+				<canvas id="canvas1" tabindex="0" style="cursor:auto;">
+				</canvas>
+			</div>
+			<div id="guide">
+				<div id="content">
+					<h1>Saving and loading Graph Data</h1>
+					<h2>Overview</h2>
+					<p>
+						There are different options to persist your graph data to a storage. One option is to retrieve all information using the APIs and saving the data in
+						a format and structure as you like or is needed by your application architecture. When rebuilding the graph, you simply retrieve your format and call the
+						appropriate APIs to build the graph from scratch. You can use the <code>XMLWriter</code> class provided with the framework,
+					</p>
+					<p>
+						Another option is to use the build in XML persistence. save the graph using this writer by calling the API method offered for this.
+						Using this method you can retrieve a textual representation of the XML tree and save
+						this to your storage. Loading works similarly. You can use the DOM Parser to let it parse an XML string and then pass the resulting XML DOM to
+						the <code>GraphEditor</code>. The <code>GraphEditor</code> will read and interpret the XML and rebuild the graph as it was saved. Following two samples, which show an 
+						option to save and load graph data.
+					</p>
+					<h2>Saving</h2>
+					<p>
+						First we will show how to save a graph simply using the built in <code>saveXML</code> method of the <code>GraphEditor</code>. If you look at the result, you can observe
+						that the XML tries to save only necessary information. If you look at the attributes, you can see that only the color information is saved, 
+						as only this information differs from the default setting.
+					</p>
+					<p class="hint">
+						Please note, that the result is inserted below the source code sample. This gives you the opportunity to have a look at the created XML data.
+					</p>
+					<div class="codediv">
+						<pre class="prettyprint" source="saveXML">
+						</pre>
+					</div>
+					<button type="button" onclick="sampleCode.saveXML()">
+						Save XML
+					</button>
+					<h3>Saved XML Data</h3>
+					<div class="codediv">
+						<pre id="xmlsdata" class="prettyprint">
+							XML data
+						</pre>
+					</div>
+					<h2>Loading</h2>
+					<p>
+						For loading we could simply use the XML that was generated in the previous chapter. This involves to create a <code>DOMParser</code>, let it parse the XML string
+						and pass it to the <code>readXML</code> method of the <code>GraphEditor</code>. Another option is to create an XML stream from scratch and load that into the <code>GraphEditor</code>. This 
+						is the approach that is now used for the following sample. The <code>XMLWriter</code> class of JS-Graph is used to create an XML Structure. Once this is finished the
+						data is streamed to a string. This string is the parsed by the <code>DOMParser</code> and passed to the <code>readXML</code> method as described.
+					</p>
+					<p class="hint">
+						Please note, that the result of creating the stream is inserted below the source code sample. This gives you the opportunity to have a look at the created XML data.
+					</p>
+					<div class="codediv">
+						<pre class="prettyprint" source="readXML">
+						</pre>
+					</div>
+					<button type="button" onclick="sampleCode.readXML()">
+						Create and read XML
+					</button>
+					<h3>Created XML Data</h3>
+					<div class="codediv">
+						<pre id="xmlrdata" class="prettyprint">
+						</pre>
+					</div>
+					<p>
+						In addition to saving the graph as an XML file, you have the option to save the graph as a SVG file. You can do this for a specified rectangle within
+						the graph or for a certain page. Please visit the documentation for further details.
+					</p>
+					<p>
+                        This is the final step of the tutorial.
+					</p>
+					<p>
+						&nbsp;
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

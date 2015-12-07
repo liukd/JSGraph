@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS Graph - Templates</title>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<link href="css/jsgfirststeps.css" rel="stylesheet">
+		<script type="application/javascript" src="../../lib/Loader.js"></script>
+		<script type="application/javascript" src="loader.js"></script>
+		<script type="application/javascript" src="prettify/prettify.js"></script>	
+	</head>
+	<body onload="loadDemo()">
+		<div style="width:100%; height:100%;">
+			<div id="graph">
+				<canvas id="canvas1" tabindex="0" style="cursor:auto;">
+				</canvas>
+			</div>
+			<div id="guide">
+				<div id="content">
+					<h1>Working with Templates</h1>
+					<h2>Overview</h2>
+					<p>
+						Templates are predefined <code>AttributeList</code>s including the members of the <code>AttributeList</code> and values that are assigned to the members or <code>Attribute</code>s. Templates
+						are assigned to an <code>AttributeList</code> to bind the <code>AttributeList</code> to a centralized and predefined set of settings for the <code>Attribute</code>s. You can 
+						assign a template to muliple instance of an <code>AttributeList</code>. The <code>Attribute</code>s within the <code>AttributeList</code> fetch their values from the Template as long
+						as the value of the <code>Attribute</code> is not explicitly set. Once the <code>Attribute</code> receives a specific value this attribute does not retrieve its value from the
+						template any more. But the other members of the <code>AttributeList</code> stay connected to the template as long as their values are not set. Whenever the template changes,
+						the <code>Attribute</code>s that are not explicitly set, retrieve the new values from the template.
+					</p>
+					<p>
+					    You can use template e.g. to define styles for your <code>GraphItem</code>s. This could imply format or font settings, but this can also be used to set predefined settings for
+					    custom <code>AttributeList</code>s. There are two advantages to this approach. The first advantage is that you can centralize settings, that can easily be changed afterwards. Those
+					    changes are then reflected in all instances of the <code>Attribute</code>s (unless they were overwritten). The other advantage lies in the fact, that it saves memory, as the <code>Attribute</code>   
+					    only needs to allocate memory, if it has a specific setting.  
+					</p>
+					<h2>Using a Template</h2>
+					<p>
+                        Let us look at a few examples to clarify the idea of templates. First we will create a template for formats derived from the default format template. This template
+                        is changed setting a different format and assigned to three of the four items. The first item is still bound to the default template and does not reflect any change, when
+                        the template is assigned or changed. The second and third are bound to the template and change with the template. The fourth has its own instance of the FillColor
+                        attribute and does not change this attribute, when the templates changes, but the other two. 
+                    </p>
+					<div class="codediv">
+					<pre class="prettyprint" source="useTemplate"></pre>
+					</div>
+					<button type="button" onclick="sampleCode.useTemplate()">
+						Create and assign Template
+					</button>
+                    <p>
+                        Now we only change the template and the change will be reflected in those items, that are attached to the template. Note that the first item still remains unchanged.
+                    </p>
+                    <div class="codediv">
+                    <pre class="prettyprint" source="changeTemplate"></pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.changeTemplate()">
+                        Change Template
+                    </button>
+                    <h2>Creating a Template</h2>
+                    <p>
+                        The next step is to create a template for a custom attribute list. In the following sample the custom attribute list from the previous samples is used. The list is created
+                        and in addition a template is created derived from that list. This template is set as a parent list for the custom attribute list. This step actually sets the template as
+                        the active template for the custom attribute list. The attribute values are then retrieved from the template as long as the attributes of the items attribute list
+                        are not changed directly. 
+                    </p>
+                    <div class="codediv">
+                    <pre class="prettyprint" source="createTemplate"></pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.createTemplate()">
+                        Create and assign custom Template
+                    </button>
+                    <p>
+                        Now we can change the template and the change will be reflected in the item. As we have assigned the attribute value as the label content, the label changes,
+                        when the template that is connected to the attribute changes.
+                    </p>
+                    <div class="codediv">
+                    <pre class="prettyprint" source="changeCustomTemplate"></pre>
+                    </div>
+                    <button type="button" onclick="sampleCode.changeCustomTemplate()">
+                        Change custom Template
+                    </button>
+                    <p>
+                        Templates can be used in a number of different situations to effectively predefine and reassign format or attribute information. There is also an option to load
+                        predefined templates from XML files. Please visit the documentation for additional information about templates. 
+                    </p>
+					<p>
+                        Follow <a href="commands.html">JS Graph - Executing commands</a> to continue.
+					</p>
+					<p>&nbsp;</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS Graph - Attributes</title>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<link href="css/jsgfirststeps.css" rel="stylesheet">
+		<script type="application/javascript" src="../../lib/Loader.js"></script>
+		<script type="application/javascript" src="loader.js"></script>
+		<script type="application/javascript" src="prettify/prettify.js"></script>	
+	</head>
+	<body onload="loadDemo()">
+		<div style="width:100%; height:100%;">
+			<div id="graph">
+				<canvas id="canvas1" tabindex="0" style="cursor:auto;">
+				</canvas>
+			</div>
+			<div id="guide">
+				<div id="content">
+					<h1>Working with Attributes</h1>
+					<h2>Overview</h2>
+					<p>
+						Attributes can be used to influence the behavior and capabilities of a <code>GraphItem</code>. You can allow or deny editing capabilities like sizing, deleting or 
+						moving. You can also change the behavior concerning selection and port assignment. Some of the attributes affect the visual appearance
+						like clipping contained items or closing a polyline. Finally some of the attributes are related to the container functionality. In the following
+						sections we will explain these in more detail. 
+					</p>
+					<h2>GraphItem Attributes changing the behavior</h2>
+					<p>
+						Sometimes it is desired to prohibit or deny capabilities of a <code>GraphItem</code>. Items are supposed to stay in place, keep their size or should not be rotated. These
+						capabilities can be defined individually for each <code>GraphItem</code>. In the following sample, we will assign the attributes being related to the behavior. The label
+						of the item visualizes the imposed restriction. Just try out to see, how the item reacts.  Some of the restrictions are directly visualized. E.g. an item that
+						is not moveable does not show a move cursor or items that cannot be resized have grey selection handles.
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="itemAttributesBehaviour"></pre>
+					</div>
+					<br/>
+					<button type="button" onclick="sampleCode.itemAttributesBehaviour()">
+						Set Behavior Attributes
+					</button>
+					<h2>GraphItem Attributes changing the visual appearance</h2>
+					<p>
+						Attributes that change the visual appearance can also be defined similar. You can close or open a polyline using an attribute. Only closed polyline can
+						be filled with a color or a gradient. An item can be hidden using the visible attribute. You can also change the margins. Currently this only affects
+						text nodes within a container.
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="itemAttributesAppearance"></pre>
+					</div>
+					<br/>
+					<button type="button" onclick="sampleCode.itemAttributesAppearance()">
+						Set Appearance Attributes
+					</button>
+					<h2>GraphItem Attributes related to Container functionality</h2>
+					<p>
+						An item can contain other items. This feature is activated by default. If you move an item over another item it will be added automatically to 
+						the container. This can be prohibits by setting the appropriate flag. Related to this functionality you can define, whether an item can be 
+						collapsed and where the collapse/expand icon shall be displayed and how it collapses.
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="itemAttributesContainer"></pre>
+					</div>
+					<br/>
+					<button type="button" onclick="sampleCode.itemAttributesContainer()">
+						Set Container Attributes
+					</button>
+					<p>
+						Using containers you can create very complex graphs. Looking at our demo applications, you can observe that
+						the swimlane and pool shape within the BPMN samples are created using containers. For an introduction, you did
+						get an overview of the provided built in attributes. You can continue the tutorial with an introduction to
+						custom attributes.
+					</p>
+					<p>
+						Follow <a href="customattributes.html">JS Graph - Working with Custom Attributes</a> to continue.
+					</p>
+					<p>&nbsp;</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS Graph - Formatting</title>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<link href="css/jsgfirststeps.css" rel="stylesheet">
+		<!--
+		<script type="application/javascript" src="../../lib/Loader.js"></script>
+		-->
+		<script type="application/javascript" src="../jsg/Loader.js"></script>
+		<script type="application/javascript" src="loader.js"></script>
+		<script type="application/javascript" src="prettify/prettify.js"></script>	
+	</head>
+	<body onload="loadDemo()">
+		<div style="width:100%; height:100%;">
+			<div id="graph">
+				<canvas id="canvas1" tabindex="0" style="cursor:auto;">
+				</canvas>
+			</div>
+			<div id="guide">
+				<div id="content">
+					<h1>Working with Attributes</h1>
+					<h2>Overview</h2>
+					<p>
+						This chapter explains in more detail, .
+					</p>
+					<h2>GraphItem Attributes</h2>
+					<p>
+						Text can be formatted using font settings. You can apply a font name, font size and the font styles. In addition you can set the text
+						position within the parent node. You can have more than one label attached to a node. Each label can have its own font settings. In the following
+						sample you can see how the font settings are applied and their effect. We will change the font name, size and color. Please notice, that the
+						settings of the parent GraphItem is changed and the dependant TextNodes use this setting.
+					</p>
+					<div class="codediv">
+					<pre class="prettyprint" source="formatTextFont"></pre>
+					</div>
+					<button type="button" onclick="sampleCode.formatTextFont()">
+						Format Text
+					</button>
+					<p>
+						Follow <a href="formatting.html">JS Graph - Formatting</a> to continue.
+					</p>
+					<p>&nbsp;</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
